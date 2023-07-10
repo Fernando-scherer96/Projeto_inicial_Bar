@@ -1,10 +1,8 @@
 $(document).ready(function(){
 
-    let mascara = if (celular) ? '(00) 00000-0000' : '(00) 0000-0000'
+    $(`#telefone`).mask(`(00) 00000-0000`);
 
-    $(`#telefone`).mask(mascara);
-
-    $('form').validate({
+    $('form').validate({ //O plugin validate trabalha com nome e não com ID então no html da para notar que colocamos alem do id a tag name.//
         rules: {
             nome: {
             required: true
@@ -13,11 +11,21 @@ $(document).ready(function(){
                 required: true,
                 email: true
             }, 
-            telefone: {
-                required: true
-            }, 
             mensagem: {
                 required:true
+            }
+        }, 
+        messages : {
+            nome: 'Por favor, insira seu nome', 
+            email: 'Por favor, insira seu email', 
+        }, 
+        submitHandler: function(form){
+            console.log(form);
+        }, 
+        invalidHandler: function(evento, validador){
+            let camposIncorretos = validador.numberOfInvalids();
+            if (camposIncorretos) {
+                alert (`Existem ${camposIncorretos} campos incorretos no formulario`)
             }
         }
     });
